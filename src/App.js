@@ -1,24 +1,25 @@
 import logo from './logo.svg';
 import './App.css';
+import { Index } from './pages/Index';
+import { Upload } from './pages/Upload';
+import { Model} from './pages/Model';
+import { Train} from './pages/Train';
+import { Layout } from './components/layout/Layout';
+import {Route, Switch,} from 'react-router-dom';
+import { AnimatePresence } from "framer-motion";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Layout title = "Food waste prediction">
+      <AnimatePresence exitBeforeEnter>
+        <Switch>
+          <Route path="/upload" component={Upload}/>
+          <Route path="/train" component={Train}/>
+          <Route path="/model" component={Model}/>
+          <Route path="/" component={Index}/>
+        </Switch>
+      </AnimatePresence>
+    </Layout>
   );
 }
 
