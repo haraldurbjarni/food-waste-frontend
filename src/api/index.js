@@ -35,6 +35,10 @@ export const trainModel = async (dataKey,priceKey,profitMargin) => {
   return await appFetch(`${API_URL}/train_model?dataKey=${dataKey}&priceKey=${priceKey}&profitMargin=${profitMargin}`);
 }
 
+export const testModel = async(dataKey) => {
+  return await appFetch(`${API_URL}/make_prediction?dataKey=${dataKey}`);
+}
+
 
 export const testEndpoint = async key => {
   console.log('HALLO', key);

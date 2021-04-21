@@ -2,18 +2,20 @@
   &__header {
     text-align: center;
   }
-  
+
   &__main {
     width: 60%;
-    background-color:rgb(253, 253, 253);
+    background-color: rgb(253, 253, 253);
     min-height: 100vh;
     margin-bottom: 1rem;
     padding: 0 1rem;
+    min-width: 769px;
+    overflow: hidden;
   }
   &__content {
     padding: 2em;
   }
-  background-color:rgb(207, 218, 191);
+  background-color: rgb(207, 218, 191);
   min-height: 100vh;
   display: flex;
   flex-direction: column;

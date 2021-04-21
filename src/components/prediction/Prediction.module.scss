@@ -2,5 +2,22 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 2em,
+  padding-top: 2em;
+}
+
+.table {
+  min-width: 650px;
+  height: fit-content;
+}
+
+.totals {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 2em;
+}
+
+.container {
+  margin-top: 16px;
+  max-height: 440px;
 }
