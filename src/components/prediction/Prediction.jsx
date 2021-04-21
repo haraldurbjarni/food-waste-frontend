@@ -149,7 +149,6 @@ export function Prediction() {
               </TableHead>
               <TableBody>
                 {keys.map((key) => (
-
                   <TableRow key={key}>
                     <TableCell component="th" scope="row">
                       {key}
@@ -170,8 +169,8 @@ export function Prediction() {
           </TableContainer>
         </Paper>
       </>
-      );
-      }
+    );
+  }
 
   function renderTable() {
     const { tableData, missedSum, wastedSum, salesSum } = transformData();

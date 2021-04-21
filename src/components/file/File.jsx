@@ -29,19 +29,18 @@ export function File({ type }) {
       //   throw new Error('result not ok');
       // }
       let result;
-      if (type==='sales') {
+      if (type === "sales") {
         result = await uploadDataFile(file);
-        sessionStorage.setItem('dataKey', result?.key);
-      }
-      else {
+        sessionStorage.setItem("dataKey", result?.key);
+      } else {
         result = await uploadPriceFile(file);
-        sessionStorage.setItem('priceKey', result?.key);
+        sessionStorage.setItem("priceKey", result?.key);
       }
-      console.log(result);
+      //console.log(result);
 
-      const testres = await testEndpoint(result?.key);
+      //const testres = await testEndpoint(result?.key);
 
-      console.log('storage key', sessionStorage.getItem('dataKey'));
+      console.log("storage key", sessionStorage.getItem("dataKey"));
     } catch (e) {
       console.log(e);
       setError("Couldn't upload file");
