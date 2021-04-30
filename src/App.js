@@ -13,7 +13,7 @@ function App() {
   const location = useLocation();
 
   return (
-    <Layout title = "Food waste prediction">
+    <Layout title = "Food Waste Prediction Project">
       <AnimatePresence initial={false} exitBeforeEnter onExitComplete={() => console.info("exit complete")}>
         <Switch location={location} key={location.pathname}> 
           <Route path="/upload" component={Upload}/>

@@ -1,12 +1,13 @@
 import s from "./NextPage.module.scss";
 import { Link } from "react-router-dom";
+import { Button } from "@material-ui/core";
 
 export function NextPage({ href }) {
   return (
-    <div className={s.NextPage__wrapper}>
+    <Button disableElevation variant="contained" color="link" className={s.button}>
       <Link className={s.NextPage} to={href}>
         Next Page &gt;
       </Link>
-    </div>
+    </Button>
   );
 }

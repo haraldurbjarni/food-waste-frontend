@@ -20,17 +20,17 @@ export function Train() {
         scenarios:
       </p>
       <hr></hr>
-      <p>if Predictied value &gt; Actual value, then:</p>
-      <blockquote>Sales Profit = Actual*(Price*Profit Margin) </blockquote>
-      <blockquote>
+      <p style={{fontFamily: "consolas"}}>if Predictied value &gt; Actual value, then:</p>
+      <blockquote style={{fontFamily: "consolas"}}>Sales Profit = Actual*(Price*Profit Margin) </blockquote>
+      <blockquote style={{fontFamily: "consolas"}}>
         {" "}
         Capital wasted = (Predicted-Actual)*(Price*(1-Profit Margin))
       </blockquote>
-      <blockquote> Capital missed out on = 0 </blockquote>
-      <p>if Predictied value &lt; Actual value, then:</p>
-      <blockquote>Sales Profit = Predicted*(Price*Profit Margin)</blockquote>
-      <blockquote>Capital wasted = 0</blockquote>
-      <blockquote>
+      <blockquote style={{fontFamily: "consolas"}}> Capital missed out on = 0 </blockquote>
+      <p style={{fontFamily: "consolas"}}> if  Predictied value &lt; Actual value, then:</p>
+      <blockquote style={{fontFamily: "consolas"}}>Sales Profit = Predicted*(Price*Profit Margin)</blockquote>
+      <blockquote style={{fontFamily: "consolas"}}>Capital wasted = 0</blockquote>
+      <blockquote style={{fontFamily: "consolas"}}>
         Capital missed out on = (Actual-Predicted)*(Price*Profit Margin)
       </blockquote>
       <p>

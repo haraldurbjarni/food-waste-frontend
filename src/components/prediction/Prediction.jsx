@@ -222,11 +222,11 @@ export function Prediction() {
         </Paper>
 
         <div className={s.totals}>
-          <h3>Total Sales profit: {formatCurrency(Math.round(salesSum))}</h3>
-          <h3>
+          <h3 style = {{color:'green'}}>Total Sales profit: {formatCurrency(Math.round(salesSum))}</h3>
+          <h3 style = {{color:'orange'}}>
             Total Capital missed out on: {formatCurrency(Math.round(missedSum))}{" "}
           </h3>
-          <h3>Total Capital wasted: {formatCurrency(Math.round(wastedSum))}</h3>
+          <h3 style = {{color:'red'}}>Total Capital wasted: {formatCurrency(Math.round(wastedSum))}</h3>
         </div>
         <p>
           Now you can scale all of the models prediction values by a constant

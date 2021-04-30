@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import ReactLoading from "react-loading";
-import { Button } from "../button/Button";
+import { Button } from "@material-ui/core";
 import { uploadPriceFile, uploadDataFile, testEndpoint } from "../../api";
 
 export function File({ type }) {
@@ -17,17 +17,6 @@ export function File({ type }) {
     setLoading(true);
     try {
       console.log("file", file, file.name);
-      // const body = new FormData();
-      // body.append('file', file, file.name);
-      // const requestOptions = {
-      //   method: 'POST',
-      //   credentials: 'include',
-      //   body,
-      // };
-      // const result = await fetch(url, requestOptions);
-      // if (!result.ok) {
-      //   throw new Error('result not ok');
-      // }
       let result;
       if (type === "sales") {
         result = await uploadDataFile(file);
@@ -36,24 +25,24 @@ export function File({ type }) {
         result = await uploadPriceFile(file);
         sessionStorage.setItem("priceKey", result?.key);
       }
-      //console.log(result);
-
-      //const testres = await testEndpoint(result?.key);
-
       console.log("storage key", sessionStorage.getItem("dataKey"));
     } catch (e) {
       console.log(e);
       setError("Couldn't upload file");
     } finally {
       setLoading(false);
-      setUploaded(true);
+      if (!error) {
+        setUploaded(true);
+      }
     }
   }
 
   return (
     <div>
-      <input type="file" onChange={fileChange} />
-      <Button disabled={loading} onClick={uploadFile}>
+      <Button color="primary">
+        <input type="file" onChange={fileChange} />
+      </Button>
+      <Button color="primary" disabled={loading} onClick={uploadFile}>
         Upload
       </Button>
       {loading && (

@@ -23,7 +23,8 @@ export function Index() {
         option of predicting the sale numbers of the next week outside of the
         data timeframe. React JS was used for the frontend of this application
         and flask for the backend. The whole project as well as the ipython
-        notebook for the model selection can be found <a href="https://github.com/haraldurbjarni">here</a>.
+        notebook for the model selection can be found{" "}
+        <a href="https://github.com/haraldurbjarni">here</a>.
       </p>
       <NextPage href={"/upload"} />
     </AnimatedPage>
