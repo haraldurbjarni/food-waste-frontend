@@ -23,14 +23,14 @@ import Paper from "@material-ui/core/Paper";
 import { Container } from "@material-ui/core";
 import cloneDeep from "lodash.clonedeep";
 import { createBatcher } from "framer-motion";
-
+import {Link} from 'react-router-dom';
 // Value er tala í heilum krónum
 const formatCurrency = (value) =>
   new Intl.NumberFormat("is-IS", { style: "currency", currency: "ISK" }).format(
     value
   );
 
-export function Prediction() {
+export const Prediction = () => {
   const [loading, setLoading] = useState(false);
   const [loadingTest, setLoadingTest] = useState(false);
   const [error, setError] = useState(null);
@@ -49,13 +49,23 @@ export function Prediction() {
     setScalePrediction(newValue);
   };
 
+  const clearModelCache = () => {
+    sessionStorage.removeItem('modelType');
+    sessionStorage.removeItem('modelResult');
+  }
+
+  const clearAllCache = () => {
+    sessionStorage.clear();
+  }
+
   async function makePrediction() {
     setLoading(true);
     const dataKey = sessionStorage.getItem("dataKey");
     const priceKey = sessionStorage.getItem("priceKey");
+    const modelType = sessionStorage.getItem("modelType");
     let result;
     try {
-      result = await trainModel(dataKey, priceKey, profitMargin);
+      result = await trainModel(dataKey, priceKey, profitMargin, modelType);
     } catch (e) {
       console.log(e);
       setError(true);
@@ -282,12 +292,13 @@ export function Prediction() {
       {originalData && renderTable()}
       {originalData && (
         <>
-          <p>You can also predict the next week of sales</p>
+          <p>You can also predict the next week of sales here below.</p>
           <Button
             variant="contained"
             color="primary"
             disabled={loadingTest || data}
             onClick={makeFuturePrediction}
+            style = {{'marginBottom': '16px'}}
           >
             Predict next week
           </Button>
@@ -301,6 +312,13 @@ export function Prediction() {
         </div>
       )}
       {data && renderNewTable()}
+      {data &&
+        <>
+        <p>Thanks for trying this out! 😊 You can try this again with
+          another <Link onClick = {clearModelCache} to = "/model"> model </Link> or new <Link onClick = {clearAllCache} to = "/upload"> data </Link>
+        </p>
+        </>
+      }
     </div>
   );
 }

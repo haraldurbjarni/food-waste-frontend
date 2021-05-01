@@ -12,10 +12,12 @@ import { ModelContainer } from "../components/modelContainer/ModelContainer";
 export function Model() {
 
   const [menuValue, setMenuValue] = useState('LSTM');
-  sessionStorage.setItem('modelType', )
-
+  //sessionStorage.setItem('modelType', 'LSTM');
+  let modelValue = menuValue;
+  sessionStorage.setItem('modelType', modelValue);
   const handleChange = (e) => {
     setMenuValue(e.target.value);
+    //sessionStorage.setItem('modelType', e.target.value);
   };
 
   return (

@@ -2,7 +2,6 @@
 const API_URL = 'http://localhost:5000/api';
 
 export const appFetch = async (url, options={}) => {
-  console.log('HVAP ER I GANGI')
   const res = await fetch(url, { credentials: 'include', ...options })
   if (!res.ok) {
     throw new Error('result not ok');
@@ -31,8 +30,8 @@ export const uploadPriceFile = async file => {
 }
 
 
-export const trainModel = async (dataKey,priceKey,profitMargin) => {
-  return await appFetch(`${API_URL}/train_model?dataKey=${dataKey}&priceKey=${priceKey}&profitMargin=${profitMargin}`);
+export const trainModel = async (dataKey,priceKey,profitMargin, modelType) => {
+  return await appFetch(`${API_URL}/train_model?dataKey=${dataKey}&priceKey=${priceKey}&profitMargin=${profitMargin}&modelType=${modelType}`);
 }
 
 export const testModel = async(dataKey) => {
