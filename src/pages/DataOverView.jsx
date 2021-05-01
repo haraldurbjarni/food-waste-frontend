@@ -63,7 +63,7 @@ export function DataOverview(){
         <YAxis />
         <Tooltip />
         <Legend />
-        <Bar dataKey="name" name = "Product name" fill="#82ca9d" />
+        <Bar dataKey="name" name = "Units sold" fill="#82ca9d" />
       </BarChart>
       </div>
       </>

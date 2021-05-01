@@ -1,27 +1,46 @@
 import { NextPage } from "../components/nextPage/NextPage";
 import { PreviousPage } from "../components/previousPage/PreviousPage";
 import AnimatedPage from "../components/animatedPage";
+import MenuItem from '@material-ui/core/MenuItem';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import { useState } from "react";
+import { ModelContainer } from "../components/modelContainer/ModelContainer";
 
 export function Model() {
+
+  const [menuValue, setMenuValue] = useState('LSTM');
+  sessionStorage.setItem('modelType', )
+
+  const handleChange = (e) => {
+    setMenuValue(e.target.value);
+  };
+
   return (
     <AnimatedPage>
-      <h3>The Model</h3>
-      <p>
-        The model that is used for this task is an LSTM. Long Short-Term Memory
-        (LSTM) networks are a type of recurrent neural network capable of
-        learning order dependence in sequence prediction problems. A common LSTM
-        unit is composed of a cell, an input gate, an output gate and a forget
-        gate. The cell remembers values over arbitrary time intervals and the
-        three gates regulate the flow of information into and out of the cell.
+      <h3>Model Selection</h3>
+      <p>Here you can select what type of recurrent network you train your dataset
+        on. Select one from the dropdown list and go to the next page when you've chosen
+        your model.
       </p>
-      <img width="100%" src="lstm.png"></img>
-      <p>
-        This makes the LSTM architecture suitible for this task since the units
-        can recognize patterns for within the sequence of sales of the products
-        between days and therefore make a prediction on how much will be sold in
-        the future.
-      </p>
-      <PreviousPage href = {"/upload"}/>
+      <FormControl>
+        <InputLabel id="demo-simple-select-label">Model</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={menuValue}
+          onChange={handleChange}
+        >
+          <MenuItem value={'LSTM'}>LSTM</MenuItem>
+          <MenuItem value={'RNN'}>Vanilla RNN</MenuItem>
+          <MenuItem value={'GRU'}>GRU</MenuItem>
+          <MenuItem value={'Bidirectional LSTM'}>Bidirectional LSTM</MenuItem>
+        </Select>
+      </FormControl>
+      <ModelContainer type = {menuValue}/>
+      <PreviousPage href = {"/dataOverview"}/>
       <NextPage href={"/train"} />
     </AnimatedPage>
   );
