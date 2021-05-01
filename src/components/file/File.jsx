@@ -15,9 +15,9 @@ export function File({ type }) {
   }
   async function uploadFile() {
     setLoading(true);
+    let result;
     try {
       console.log("file", file, file.name);
-      let result;
       if (type === "sales") {
         result = await uploadDataFile(file);
         sessionStorage.setItem("dataKey", result?.key);
@@ -33,7 +33,11 @@ export function File({ type }) {
       setLoading(false);
       if (!error) {
         setUploaded(true);
-      }
+      } 
+    }
+    if(result && type === "sales") {
+      sessionStorage.setItem("perdayTotals", JSON.stringify(result['Perday totals']))
+      sessionStorage.setItem("productTotals", JSON.stringify(result['Product totals']))
     }
   }
 
@@ -48,8 +52,12 @@ export function File({ type }) {
       {loading && (
         <ReactLoading color={"black"} type={"spin"} c height={80} width={40} />
       )}
-      {error && <p>An error occurred: {error}</p>}
-      {uploaded && <p>File successfully uploaded!</p>}
+      {error &&
+         <p>An error occurred: {error}</p>
+      }
+      {uploaded &&
+        <p>File successfully uploaded!</p>
+      }
     </div>
   );
 }

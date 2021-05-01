@@ -38,7 +38,7 @@ export function Upload() {
       <img src="second_file.PNG" />
       <File type={"prices"} />
       <PreviousPage href = {"/index"}/>
-      <NextPage href={"/model"} />
+      <NextPage href={"/dataOverview"} />
     </AnimatedPage>
   );
 }

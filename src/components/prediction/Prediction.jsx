@@ -128,8 +128,8 @@ export function Prediction() {
 
       return newRow;
     });
-
-    return { tableData, missedSum, wastedSum, salesSum };
+    const totalProfit = salesSum - wastedSum; 
+    return { tableData, missedSum, wastedSum, salesSum, totalProfit };
   };
 
   function renderNewTable() {
@@ -173,7 +173,7 @@ export function Prediction() {
   }
 
   function renderTable() {
-    const { tableData, missedSum, wastedSum, salesSum } = transformData();
+    const { tableData, missedSum, wastedSum, salesSum, totalProfit} = transformData();
     return (
       <>
         <Paper>
@@ -227,6 +227,7 @@ export function Prediction() {
             Total Capital missed out on: {formatCurrency(Math.round(missedSum))}{" "}
           </h3>
           <h3 style = {{color:'red'}}>Total Capital wasted: {formatCurrency(Math.round(wastedSum))}</h3>
+          <h3 style = {{color:'darkblue'}}>Total Profit: {formatCurrency(Math.round(totalProfit))}</h3>
         </div>
         <p>
           Now you can scale all of the models prediction values by a constant

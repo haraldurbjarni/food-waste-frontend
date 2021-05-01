@@ -35,7 +35,7 @@ export function Train() {
       </blockquote>
       <p>
         and if the values are the same we miss out on nothing, waste nothing and
-        profit exactly what we bought for stock and what we sold.
+        profit exactly what we bought for stock and what we sold. 
       </p>
       <hr></hr>
       <p>

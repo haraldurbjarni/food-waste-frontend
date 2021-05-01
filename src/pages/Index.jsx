@@ -24,7 +24,7 @@ export function Index() {
         data timeframe. React JS was used for the frontend of this application
         and flask for the backend. The whole project as well as the ipython
         notebook for the model selection can be found{" "}
-        <a href="https://github.com/haraldurbjarni">here</a>.
+        <a href="https://github.com/haraldurbjarni">here</a>. I hope you enjoy this 😊😊.
       </p>
       <NextPage href={"/upload"} />
     </AnimatedPage>
