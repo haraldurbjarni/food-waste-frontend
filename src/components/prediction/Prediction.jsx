@@ -8,6 +8,7 @@ import {
   trainModel,
   testModel,
   testEndpoint,
+  getTrainingStatus,
 } from "../../api";
 import Slider from "@material-ui/core/Slider";
 import Typography from "@material-ui/core/Typography";
@@ -23,12 +24,50 @@ import Paper from "@material-ui/core/Paper";
 import { Container } from "@material-ui/core";
 import cloneDeep from "lodash.clonedeep";
 import { createBatcher } from "framer-motion";
-import {Link} from 'react-router-dom';
+import { Link } from "react-router-dom";
 // Value er tala í heilum krónum
 const formatCurrency = (value) =>
   new Intl.NumberFormat("is-IS", { style: "currency", currency: "ISK" }).format(
     value
   );
+
+const TrainingStatus = ({ onModelReady }) => {
+  useEffect(() => {
+    const checkStatus = async () => {
+      const dataKey = sessionStorage.getItem("dataKey");
+      const priceKey = sessionStorage.getItem("priceKey");
+      const modelType = sessionStorage.getItem("modelType");
+      let result;
+      try {
+        result = await getTrainingStatus(dataKey);
+      } catch (e) {
+        console.log(e);
+      }
+
+      console.log(result);
+
+      return result || { ready: false, model: null };
+    };
+
+    const handle = setInterval(async () => {
+      const { ready, model } = await checkStatus();
+      if (ready) {
+        onModelReady(model);
+        clearInterval(handle);
+      }
+    }, 5000);
+
+    return () => clearInterval(handle);
+  }, []);
+
+  return (
+    <div className={s.circular}>
+      <h3>Training model...</h3>
+      <CircularProgress size={70} />
+      <h4>This may take a couple of minutes</h4>
+    </div>
+  );
+};
 
 export const Prediction = () => {
   const [loading, setLoading] = useState(false);
@@ -50,13 +89,13 @@ export const Prediction = () => {
   };
 
   const clearModelCache = () => {
-    sessionStorage.removeItem('modelType');
-    sessionStorage.removeItem('modelResult');
-  }
+    sessionStorage.removeItem("modelType");
+    sessionStorage.removeItem("modelResult");
+  };
 
   const clearAllCache = () => {
     sessionStorage.clear();
-  }
+  };
 
   async function makePrediction() {
     setLoading(true);
@@ -69,15 +108,7 @@ export const Prediction = () => {
     } catch (e) {
       console.log(e);
       setError(true);
-    } finally {
-      setLoading(false);
     }
-    console.log(result);
-    //setData(result[0]);
-    setOriginalData(result[0]);
-    console.log(result[0]);
-    console.log(result[1]?.["Total sales profit"]);
-    sessionStorage.setItem("modelResult", JSON.stringify(result));
   }
 
   async function makeFuturePrediction() {
@@ -138,7 +169,7 @@ export const Prediction = () => {
 
       return newRow;
     });
-    const totalProfit = salesSum - wastedSum; 
+    const totalProfit = salesSum - wastedSum;
     return { tableData, missedSum, wastedSum, salesSum, totalProfit };
   };
 
@@ -183,7 +214,13 @@ export const Prediction = () => {
   }
 
   function renderTable() {
-    const { tableData, missedSum, wastedSum, salesSum, totalProfit} = transformData();
+    const {
+      tableData,
+      missedSum,
+      wastedSum,
+      salesSum,
+      totalProfit,
+    } = transformData();
     return (
       <>
         <Paper>
@@ -232,12 +269,18 @@ export const Prediction = () => {
         </Paper>
 
         <div className={s.totals}>
-          <h3 style = {{color:'green'}}>Total Sales profit: {formatCurrency(Math.round(salesSum))}</h3>
-          <h3 style = {{color:'orange'}}>
+          <h3 style={{ color: "green" }}>
+            Total Sales profit: {formatCurrency(Math.round(salesSum))}
+          </h3>
+          <h3 style={{ color: "orange" }}>
             Total Capital missed out on: {formatCurrency(Math.round(missedSum))}{" "}
           </h3>
-          <h3 style = {{color:'red'}}>Total Capital wasted: {formatCurrency(Math.round(wastedSum))}</h3>
-          <h3 style = {{color:'darkblue'}}>Total Profit: {formatCurrency(Math.round(totalProfit))}</h3>
+          <h3 style={{ color: "red" }}>
+            Total Capital wasted: {formatCurrency(Math.round(wastedSum))}
+          </h3>
+          <h3 style={{ color: "darkblue" }}>
+            Total Profit: {formatCurrency(Math.round(totalProfit))}
+          </h3>
         </div>
         <p>
           Now you can scale all of the models prediction values by a constant
@@ -283,11 +326,13 @@ export const Prediction = () => {
       </Button>
       {error && <p>An error occurred: {error}</p>}
       {loading && (
-        <div className={s.circular}>
-          <h3>Training model...</h3>
-          <CircularProgress size={70} />
-          <h4>This may take a couple of minutes</h4>
-        </div>
+        <TrainingStatus
+          onModelReady={(model) => {
+            setLoading(false);
+            setOriginalData(model[0]);
+            sessionStorage.setItem("modelResult", JSON.stringify(model));
+          }}
+        />
       )}
       {originalData && renderTable()}
       {originalData && (
@@ -298,7 +343,7 @@ export const Prediction = () => {
             color="primary"
             disabled={loadingTest || data}
             onClick={makeFuturePrediction}
-            style = {{'marginBottom': '16px'}}
+            style={{ marginBottom: "16px" }}
           >
             Predict next week
           </Button>
@@ -312,13 +357,22 @@ export const Prediction = () => {
         </div>
       )}
       {data && renderNewTable()}
-      {data &&
+      {data && (
         <>
-        <p>Thanks for trying this out! 😊 You can try this again with
-          another <Link onClick = {clearModelCache} to = "/model"> model </Link> or new <Link onClick = {clearAllCache} to = "/upload"> data </Link>
-        </p>
+          <p>
+            Thanks for trying this out! 😊 You can try this again with another{" "}
+            <Link onClick={clearModelCache} to="/model">
+              {" "}
+              model{" "}
+            </Link>{" "}
+            or new{" "}
+            <Link onClick={clearAllCache} to="/upload">
+              {" "}
+              data{" "}
+            </Link>
+          </p>
         </>
-      }
+      )}
     </div>
   );
-}
+};

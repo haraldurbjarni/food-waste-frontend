@@ -1,5 +1,5 @@
 
-const API_URL = 'https://food-waste-backend-yovba.ondigitalocean.app/api';
+const API_URL = 'http://localhost:5000/api';
 //https://food-waste-:backend-yovba.ondigitalocean.app/api';
 
 export const appFetch = async (url, options={}) => {
@@ -35,7 +35,11 @@ export const trainModel = async (dataKey,priceKey,profitMargin, modelType) => {
   return await appFetch(`${API_URL}/train_model?dataKey=${dataKey}&priceKey=${priceKey}&profitMargin=${profitMargin}&modelType=${modelType}`);
 }
 
-export const testModel = async(dataKey) => {
+export const getTrainingStatus = async (dataKey) => {
+  return await appFetch(`${API_URL}/trainingstatus/${dataKey}`);
+}
+
+export const testModel = async (dataKey) => {
   return await appFetch(`${API_URL}/make_prediction?dataKey=${dataKey}`);
 }
 
