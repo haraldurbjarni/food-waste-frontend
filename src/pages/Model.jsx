@@ -37,9 +37,13 @@ export function Model() {
         >
           <MenuItem value={'LSTM'}>LSTM</MenuItem>
           <MenuItem value={'RNN'}>Vanilla RNN</MenuItem>
-          <MenuItem value={'GRU'}>GRU</MenuItem>
+          <MenuItem value={'GRU'}>GRU </MenuItem>
           <MenuItem value={'Bidirectional LSTM'}>Bidirectional LSTM</MenuItem>
         </Select>
+        {menuValue === 'GRU' &&
+          <img width = "50" src = 'https://e7.pngegg.com/pngimages/814/341/png-clipart-bob-the-minion-emoji-minions-despicable-me-minion-rush-sticker-emoji-emoticon-android-thumbnail.png'></img>
+        }
+        
       </FormControl>
       <ModelContainer type = {menuValue}/>
       <PreviousPage href = {"/dataOverview"}/>
