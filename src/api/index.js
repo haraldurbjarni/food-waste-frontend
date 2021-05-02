@@ -1,6 +1,6 @@
 
-const API_URL = 'https://food-waste-:backend-yovba.ondigitalocean.app/api';
-//https://food-waste-:backend-yovba.ondigitalocean.app/api';
+const API_URL = 'https://food-waste-backend-yovba.ondigitalocean.app/api';
+//https://food-waste-backend-yovba.ondigitalocean.app/api';
 
 export const appFetch = async (url, options={}) => {
   const res = await fetch(url, { credentials: 'include', ...options })
