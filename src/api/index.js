@@ -1,5 +1,5 @@
 
-const API_URL = 'https://food-waste-backend-yovba.ondigitalocean.app/api';
+const API_URL = 'http://localhost:5000/api';
 //https://food-waste-backend-yovba.ondigitalocean.app/api';
 
 export const appFetch = async (url, options={}) => {

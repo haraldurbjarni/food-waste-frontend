@@ -25,6 +25,8 @@ import { Container } from "@material-ui/core";
 import cloneDeep from "lodash.clonedeep";
 import { createBatcher } from "framer-motion";
 import { Link } from "react-router-dom";
+import Box from "@material-ui/core/Box";
+
 // Value er tala í heilum krónum
 const formatCurrency = (value) =>
   new Intl.NumberFormat("is-IS", { style: "currency", currency: "ISK" }).format(
@@ -32,6 +34,8 @@ const formatCurrency = (value) =>
   );
 
 const TrainingStatus = ({ onModelReady }) => {
+  const [progress, setProgress] = useState(0);
+
   useEffect(() => {
     const checkStatus = async () => {
       const dataKey = sessionStorage.getItem("dataKey");
@@ -46,11 +50,13 @@ const TrainingStatus = ({ onModelReady }) => {
 
       console.log(result);
 
-      return result || { ready: false, model: null };
+      return result || { ready: false, model: null, progress: 0 };
     };
 
     const handle = setInterval(async () => {
-      const { ready, model } = await checkStatus();
+      const { ready, model, progress } = await checkStatus();
+
+      setProgress(progress || 0.01);
       if (ready) {
         onModelReady(model);
         clearInterval(handle);
@@ -60,10 +66,34 @@ const TrainingStatus = ({ onModelReady }) => {
     return () => clearInterval(handle);
   }, []);
 
+  console.log(progress * 100);
+
   return (
     <div className={s.circular}>
       <h3>Training model...</h3>
-      <CircularProgress size={70} />
+      <Box position="relative" display="inline-flex">
+        <CircularProgress
+          size={70}
+          variant="determinate"
+          value={progress * 100}
+        />
+        <Box
+          top={0}
+          left={0}
+          bottom={0}
+          right={0}
+          position="absolute"
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+        >
+          <Typography
+            variant="caption"
+            component="div"
+            color="textSecondary"
+          >{`${Math.round(progress * 100)}%`}</Typography>
+        </Box>
+      </Box>
       <h4>This may take a couple of minutes</h4>
     </div>
   );
